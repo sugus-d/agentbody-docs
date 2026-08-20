@@ -1,0 +1,24 @@
+---
+title: "API reference"
+description: "Reference material generated from the AgentBody Gateway OpenAPI contract."
+---
+
+The AgentBody API reference is generated from the Gateway team's canonical OpenAPI contract. It defines the supported operations, authentication requirements, parameters, request schemas, responses, and error formats.
+
+## Integration status
+
+The managed OpenAPI artifact is expected at:
+
+```text
+api-reference/openapi.json
+```
+
+This repository does not currently contain that artifact. Until the Gateway export is available, use this page as the API reference entry point and do not document endpoint schemas manually here.
+
+## Gateway handoff requirements
+
+The Gateway team should export the approved OpenAPI document into `api-reference/openapi.json` through an auditable documentation-repository pull request. The documentation owner then reviews the generated diff and configures Mintlify to render that artifact using Mintlify's current OpenAPI integration.
+
+<Warning>
+  Do not manually edit the managed OpenAPI artifact. Changes to API behavior or schema must originate in the Gateway repository.
+</Warning>

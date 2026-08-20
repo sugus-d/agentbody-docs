@@ -1,47 +1,42 @@
 ---
 title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+description: "Make your first authenticated request to the AgentBody Gateway API."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+This guide shows the request shape you will use with the AgentBody Gateway API. Before sending a production request, create an API key through the AgentBody Console.
 
 ## Prerequisites
 
-Before you begin, you must have:
+You need:
 
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
+- An AgentBody account and a valid API key.
+- A terminal with `curl`, or an HTTP client of your choice.
+- The endpoint and request schema from the [API reference](/api-reference/introduction).
 
-## Get started
+## Send an authenticated request
 
-<Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+Set your key in your shell. Do not commit this value or add it to public documentation.
 
-    ```bash
-    npm install your-package
-    ```
-  </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+```bash
+export AGENTBODY_API_KEY="<AGENTBODY_API_KEY>"
+```
 
-    ```bash
-    your-cli init
-    ```
-  </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+Then use the endpoint, method, and request body documented for the operation you want to call:
 
-    ```bash
-    your-cli start
-    ```
-  </Step>
-</Steps>
+```bash
+curl --request <METHOD> \
+  --url "https://api.agentbody.io/<PATH>" \
+  --header "Authorization: Bearer $AGENTBODY_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '<REQUEST_BODY>'
+```
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+<Note>
+  Replace the placeholders with values from the API reference. The Gateway-owned OpenAPI contract is the authoritative source for methods, paths, authentication details, and request schemas.
+</Note>
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+## Next steps
+
+- Read [Authentication](/authentication) before integrating a key into an application.
+- Read [Error handling and retries](/errors-and-retries) before sending requests from a production workload.
+- Use the [API reference](/api-reference/introduction) to select a supported operation.

@@ -1,33 +1,32 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
-# Documentation project instructions
+# AgentBody documentation project instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
-- Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
+- This repository publishes the AgentBody developer documentation site through Mintlify.
+- Documentation pages use MDX with YAML frontmatter.
+- Site configuration lives in `docs.json`.
+- The public documentation domain is `docs.agentbody.io` after custom-domain rollout.
+- The production Gateway API base URL is `https://api.agentbody.io`.
 
-## Terminology
+## Ownership boundaries
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+- The Gateway team owns the API implementation and canonical OpenAPI contract.
+- The Gateway team exports the approved contract to `api-reference/openapi.json` through an auditable pull request.
+- Do not manually edit `api-reference/openapi.json`.
+- Documentation owns narrative MDX, navigation, branding, and cross-links.
+- Do not document unverified endpoint paths, methods, schemas, or error behavior in narrative pages.
 
-## Style preferences
+## Writing style
 
-{/* Add any project-specific style rules below */}
-
-- Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
-- Use sentence case for headings
-- Bold for UI elements: Click **Settings**
-- Code formatting for file names, commands, paths, and code references
+- Use active voice and second person.
+- Keep sentences concise and use sentence case for headings.
+- Use bold for UI labels and code formatting for commands, paths, and identifiers.
+- Use `https://api.agentbody.io` in API examples.
+- Use placeholders such as `<AGENTBODY_API_KEY>`; never include real credentials.
 
 ## Content boundaries
 
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+- Document only currently supported public behavior.
+- Do not expose internal endpoints, upstream provider URLs, raw upstream errors, internal task IDs, secrets, or environment values.
+- Do not publish fixed per-tool credit prices.
+- Retry, status-code, pagination, and rate-limit guidance must align with the canonical OpenAPI contract.

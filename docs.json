@@ -1,12 +1,30 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "AgentBody Documentation",
+  "name": "AgentBody",
+  "colors": {
+    "primary": "#1F6F5B",
+    "light": "#50A58F",
+    "dark": "#1F6F5B"
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.svg",
   "navigation": {
     "pages": [
       {
-        "group": "Getting Started",
-        "pages": ["index", "quickstart"]
+        "group": "Getting started",
+        "pages": ["index", "quickstart", "authentication"]
+      },
+      {
+        "group": "Guides",
+        "pages": ["errors-and-retries", "billing-and-usage"]
+      },
+      {
+        "group": "API reference",
+        "pages": ["api-reference/introduction"]
       }
     ]
   }
