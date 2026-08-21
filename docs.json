@@ -8,10 +8,10 @@
     "dark": "#1F6F5B"
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo.webp",
+    "dark": "/logo.webp"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "contextual": {
     "options": ["copy", "view", "claude", "chatgpt"],
     "display": "toc"
