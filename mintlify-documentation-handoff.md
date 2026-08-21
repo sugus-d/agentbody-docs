@@ -94,20 +94,22 @@ The exact Mintlify OpenAPI configuration should reference the managed `api-refer
 
 A successful Gateway release or contract update must make the corresponding OpenAPI artifact available in `sugus-d/docs` through an automated, auditable change. Mintlify then deploys the updated API reference from the documentation repository's `main` branch.
 
-### Recommended workflow
+### Manual maintenance workflow
 
-1. Gateway engineer changes API behavior and canonical OpenAPI in one pull request.
+The documentation owner manually copies the approved canonical artifact from `C:\Users\45886\Documents\digitalr\agentbody-gateway\api\openapi.json` to `api-reference/openapi.json` whenever the public API contract changes.
+
+1. Gateway engineer changes API behavior and the canonical OpenAPI contract together.
 2. Gateway CI validates the contract against the API implementation and tests.
-3. A Gateway-controlled workflow opens a pull request in `sugus-d/docs` containing the exported `api-reference/openapi.json` change.
-4. The documentation owner reviews the generated API diff and confirms any associated narrative updates.
+3. Documentation owner copies the approved canonical artifact into `api-reference/openapi.json` on a documentation-repository branch.
+4. Documentation owner reviews the API diff and makes any necessary narrative documentation updates.
 5. Merge the documentation pull request into `main`.
-6. Mintlify automatically builds and publishes the update.
+6. Mintlify automatically builds and publishes the updated API reference.
 
-This pull-request handoff is preferred over silently force-pushing the documentation branch: it preserves an audit trail and lets the documentation owner review breaking changes.
+The documentation repository copy is a published mirror of the Gateway contract. Do not make independent schema edits there; make corrections in Gateway first, then copy the approved artifact again.
 
-### Temporary fallback
+### Automated workflow (future option)
 
-If automation is not yet available, a Gateway owner may manually copy the canonical artifact into the managed OpenAPI path through a documentation-repository pull request. The copied file is still generated/managed output and must not be edited independently.
+If automation is adopted later, a Gateway-controlled workflow may open the same documentation-repository pull request automatically. Keep the pull-request review boundary; do not silently force-push the documentation branch.
 
 ## Content Standards
 

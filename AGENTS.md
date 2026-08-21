@@ -11,8 +11,8 @@
 ## Ownership boundaries
 
 - The Gateway team owns the API implementation and canonical OpenAPI contract.
-- The Gateway team exports the approved contract to `api-reference/openapi.json` through an auditable pull request.
-- Do not manually edit `api-reference/openapi.json`.
+- The documentation owner manually copies the approved Gateway contract from `C:\Users\45886\Documents\digitalr\agentbody-gateway\api\openapi.json` to `api-reference/openapi.json` when the public API changes.
+- Do not modify `api-reference/openapi.json` independently of the approved Gateway contract.
 - Documentation owns narrative MDX, navigation, branding, and cross-links.
 - Do not document unverified endpoint paths, methods, schemas, or error behavior in narrative pages.
 

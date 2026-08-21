@@ -17,18 +17,23 @@
     "display": "toc"
   },
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting started",
-        "pages": ["index", "quickstart", "authentication"]
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": ["index", "quickstart", "authentication"]
+          },
+          {
+            "group": "Guides",
+            "pages": ["errors-and-retries", "billing-and-usage"]
+          }
+        ]
       },
       {
-        "group": "Guides",
-        "pages": ["errors-and-retries", "billing-and-usage"]
-      },
-      {
-        "group": "API reference",
-        "pages": ["api-reference/introduction"]
+        "tab": "API Reference",
+        "openapi": "api-reference/openapi.json"
       }
     ]
   }
