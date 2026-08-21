@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "AgentBody",
   "colors": {
-    "primary": "#1F6F5B",
-    "light": "#50A58F",
-    "dark": "#1F6F5B"
+    "primary": "#23479E",
+    "light": "#5274BD",
+    "dark": "#1C397E"
   },
   "logo": {
     "light": "/logo.webp",
