@@ -24,10 +24,6 @@
           {
             "group": "Getting started",
             "pages": ["index", "quickstart", "authentication"]
-          },
-          {
-            "group": "Guides",
-            "pages": ["errors-and-retries", "billing-and-usage"]
           }
         ]
       },

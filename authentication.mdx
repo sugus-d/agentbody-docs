@@ -3,11 +3,13 @@ title: "Authentication"
 description: "Authenticate AgentBody Gateway API requests with an API key."
 ---
 
-Authenticate every API request using an API key issued through the AgentBody Console. Keep keys out of client-side code, version control, issue trackers, screenshots, and public documentation.
+Get an API key from the [AgentBody Console](https://agentbody.io/console/keys), then send it with every API request.
+
+<Card title="Get API key" icon="key" href="https://agentbody.io/console/keys">
+  Create, manage, or revoke API keys in the AgentBody Console.
+</Card>
 
 ## Send the authorization header
-
-Use the authorization scheme required by the [API reference](/api-reference/introduction). The following example shows the expected placeholder pattern:
 
 ```bash
 curl --request <METHOD> \
@@ -15,16 +17,4 @@ curl --request <METHOD> \
   --header "Authorization: Bearer <AGENTBODY_API_KEY>"
 ```
 
-<Warning>
-  Never expose an API key in browser code or a public repository. Send requests through a trusted server-side environment.
-</Warning>
-
-## Store keys securely
-
-Use your deployment platform's secret manager or environment-variable configuration. Load the key at runtime on the server.
-
-```bash
-AGENTBODY_API_KEY=<AGENTBODY_API_KEY>
-```
-
-If you believe a key has been exposed, revoke it through the appropriate control plane and replace it before resuming requests.
+Use the method, path, and request schema from the [API reference](/api-reference/introduction). Store keys in your deployment platform's secret manager or server-side environment variables. Never expose a key in browser code or a public repository.
