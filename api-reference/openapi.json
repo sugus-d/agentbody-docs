@@ -2057,18 +2057,7 @@
         "tags": [
           "account"
         ],
-        "x-agentbody-api-id": "account.quota",
-        "x-mint": {
-          "metadata": {
-            "contextual": {
-              "options": [
-                "copy",
-                "view"
-              ],
-              "display": "header"
-            }
-          }
-        }
+        "x-agentbody-api-id": "account.quota"
       }
     },
     "/v1/documents/parse": {
