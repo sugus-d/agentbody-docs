@@ -2062,7 +2062,8 @@
           "metadata": {
             "contextual": {
               "options": [
-                "copy"
+                "copy",
+                "view"
               ],
               "display": "header"
             }
