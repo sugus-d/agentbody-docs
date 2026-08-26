@@ -12938,16 +12938,23 @@
     },
     "/v1/seo/google-ads-search-volume": {
       "get": {
-        "description": "Use this operation to return google ads keyword search volume, cpc, and competition. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return google ads keyword search volume, cpc, and competition for 1-100 keywords in a single call. Repeat the keyword query parameter once per keyword (keyword=a\u0026keyword=b). Location, language, search partners, and sort options apply to the whole batch. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
         "operationId": "get_v1_seo_google_ads_search_volume",
         "parameters": [
           {
+            "explode": true,
             "in": "query",
             "name": "keyword",
             "required": true,
             "schema": {
-              "type": "string"
-            }
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 100,
+              "minItems": 1,
+              "type": "array"
+            },
+            "style": "form"
           },
           {
             "in": "query",
