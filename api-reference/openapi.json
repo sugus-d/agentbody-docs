@@ -9,6 +9,31 @@
           "type": "string"
         }
       },
+      "CommentID": {
+        "description": "Parent comment identifier returned by a redbook post comments result.",
+        "example": "69da730e00000000160162d2",
+        "in": "query",
+        "name": "comment_id",
+        "required": true,
+        "schema": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "CommentSort": {
+        "description": "Optional redbook comment ranking. Omit it for the platform default (latest).",
+        "in": "query",
+        "name": "sort",
+        "required": false,
+        "schema": {
+          "enum": [
+            "default",
+            "latest_v2",
+            "like_count"
+          ],
+          "type": "string"
+        }
+      },
       "Cursor": {
         "description": "Opaque cursor returned by the preceding response. Omit it on the first request. Do not construct, modify, or reuse it outside this pagination flow.",
         "example": "next-page-token",
@@ -105,6 +130,43 @@
           "type": "string"
         }
       },
+      "NoteID": {
+        "description": "Xiaohongshu note identifier extracted from a public note URL, or returned by an earlier redbook result. Alternative to the note share link (url).",
+        "example": "697c0eee000000000a03c308",
+        "in": "query",
+        "name": "note_id",
+        "required": false,
+        "schema": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "NoteType": {
+        "description": "Optional redbook note search type filter.",
+        "in": "query",
+        "name": "note_type",
+        "required": false,
+        "schema": {
+          "enum": [
+            "all",
+            "video",
+            "normal",
+            "live"
+          ],
+          "type": "string"
+        }
+      },
+      "PageID": {
+        "description": "Xiaohongshu topic page identifier extracted from a public topic URL.",
+        "example": "5c1cc866febed9000184b7c1",
+        "in": "query",
+        "name": "page_id",
+        "required": true,
+        "schema": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
       "PostCode": {
         "description": "Instagram post shortcode. For https://www.instagram.com/p/DcLs3w6GZGH/, use DcLs3w6GZGH. Do not pass the full URL.",
         "example": "DcLs3w6GZGH",
@@ -172,6 +234,17 @@
           "type": "string"
         }
       },
+      "RedbookUserID": {
+        "description": "Xiaohongshu user identifier returned by an earlier redbook result. Alternative to the user share link (url).",
+        "example": "61b46d790000000010008153",
+        "in": "query",
+        "name": "user_id",
+        "required": false,
+        "schema": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
       "RedditPostID": {
         "description": "Reddit post ID. Accepts either the bare base36 ID from a Reddit URL (for example, 1vt6xlx) or the typed fullname t3_1vt6xlx.",
         "example": "1vt6xlx",
@@ -191,6 +264,23 @@
         "required": false,
         "schema": {
           "minLength": 1,
+          "type": "string"
+        }
+      },
+      "SortType": {
+        "description": "Optional redbook note search ranking. Omit it for the platform default (general).",
+        "in": "query",
+        "name": "sort_type",
+        "required": false,
+        "schema": {
+          "enum": [
+            "general",
+            "time_descending",
+            "popularity_descending",
+            "comment_descending",
+            "collect_descending",
+            "english_preferred"
+          ],
           "type": "string"
         }
       },
@@ -217,12 +307,40 @@
           "type": "string"
         }
       },
+      "TimeFilter": {
+        "description": "Optional redbook note search publish-time filter.",
+        "in": "query",
+        "name": "time_filter",
+        "required": false,
+        "schema": {
+          "enum": [
+            "all",
+            "day",
+            "week",
+            "half_year"
+          ],
+          "type": "string"
+        }
+      },
       "To": {
         "description": "Exclusive UTC end time for a usage query, formatted as RFC 3339.",
         "in": "query",
         "name": "to",
         "schema": {
           "format": "date-time",
+          "type": "string"
+        }
+      },
+      "TopicSort": {
+        "description": "Optional redbook topic feed ranking. Omit it for the platform default (trend).",
+        "in": "query",
+        "name": "sort",
+        "required": false,
+        "schema": {
+          "enum": [
+            "trend",
+            "time"
+          ],
           "type": "string"
         }
       },
@@ -9088,6 +9206,3688 @@
           "linkedin"
         ],
         "x-agentbody-api-id": "linkedin.profile_posts"
+      }
+    },
+    "/v1/redbook/post": {
+      "get": {
+        "description": "Use this operation to get a Xiaohongshu note (image note detail). Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_post",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/NoteID"
+          },
+          {
+            "$ref": "#/components/parameters/URL"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "example_id"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SocialObject"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a Xiaohongshu note",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.post"
+      }
+    },
+    "/v1/redbook/post/comments": {
+      "get": {
+        "description": "Use this operation to get the comments on a Xiaohongshu note. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_post_comments",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/NoteID"
+          },
+          {
+            "$ref": "#/components/parameters/URL"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "$ref": "#/components/parameters/CommentSort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "has_more": false,
+                  "items": [],
+                  "next_cursor": "example_value"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListResult"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Xiaohongshu note comments",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.post_comments"
+      }
+    },
+    "/v1/redbook/post/comments/replies": {
+      "get": {
+        "description": "Use this operation to get the replies to a Xiaohongshu note comment (requires comment_id). Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_post_comments_replies",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/NoteID"
+          },
+          {
+            "$ref": "#/components/parameters/URL"
+          },
+          {
+            "$ref": "#/components/parameters/CommentID"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "has_more": false,
+                  "items": [],
+                  "next_cursor": "example_value"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListResult"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Xiaohongshu note sub-comments",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.post_comments_replies"
+      }
+    },
+    "/v1/redbook/post/video": {
+      "get": {
+        "description": "Use this operation to get a Xiaohongshu video note detail. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_post_video",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/NoteID"
+          },
+          {
+            "$ref": "#/components/parameters/URL"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "example_id"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SocialObject"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a Xiaohongshu video note",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.post_video"
+      }
+    },
+    "/v1/redbook/profile": {
+      "get": {
+        "description": "Use this operation to get a Xiaohongshu user profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_profile",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RedbookUserID"
+          },
+          {
+            "$ref": "#/components/parameters/URL"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "example_id"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SocialObject"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a Xiaohongshu profile",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.profile"
+      }
+    },
+    "/v1/redbook/profile/favorites": {
+      "get": {
+        "description": "Use this operation to get the notes favorited by a Xiaohongshu profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_profile_favorites",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RedbookUserID"
+          },
+          {
+            "$ref": "#/components/parameters/URL"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "has_more": false,
+                  "items": [],
+                  "next_cursor": "example_value"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListResult"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Xiaohongshu profile favorited notes",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.profile_favorites"
+      }
+    },
+    "/v1/redbook/profile/posts": {
+      "get": {
+        "description": "Use this operation to get the notes posted by a Xiaohongshu profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_profile_posts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RedbookUserID"
+          },
+          {
+            "$ref": "#/components/parameters/URL"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "has_more": false,
+                  "items": [],
+                  "next_cursor": "example_value"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListResult"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Xiaohongshu profile posted notes",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.profile_posts"
+      }
+    },
+    "/v1/redbook/search": {
+      "get": {
+        "description": "Use this operation to search Xiaohongshu notes. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_search",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Query"
+          },
+          {
+            "$ref": "#/components/parameters/SortType"
+          },
+          {
+            "$ref": "#/components/parameters/NoteType"
+          },
+          {
+            "$ref": "#/components/parameters/TimeFilter"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "has_more": false,
+                  "items": [],
+                  "next_cursor": "example_value"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListResult"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Search Xiaohongshu notes",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.search"
+      }
+    },
+    "/v1/redbook/search/users": {
+      "get": {
+        "description": "Use this operation to search Xiaohongshu users. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_search_users",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Query"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "has_more": false,
+                  "items": [],
+                  "next_cursor": "example_value"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListResult"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Search Xiaohongshu users",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.search_users"
+      }
+    },
+    "/v1/redbook/topic": {
+      "get": {
+        "description": "Use this operation to get a Xiaohongshu topic. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_topic",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "example_id"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SocialObject"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a Xiaohongshu topic",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.topic"
+      }
+    },
+    "/v1/redbook/topic/posts": {
+      "get": {
+        "description": "Use this operation to get the notes under a Xiaohongshu topic. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "get_v1_redbook_topic_posts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageID"
+          },
+          {
+            "$ref": "#/components/parameters/TopicSort"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "has_more": false,
+                  "items": [],
+                  "next_cursor": "example_value"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ListResult"
+                }
+              }
+            },
+            "description": "Successful Gateway result.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "402": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INSUFFICIENT_BALANCE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INSUFFICIENT_BALANCE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Recharge required; do not retry.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get Xiaohongshu topic posts",
+        "tags": [
+          "redbook"
+        ],
+        "x-agentbody-api-id": "redbook.topic_posts"
       }
     },
     "/v1/reddit/post": {
@@ -22119,6 +25919,40 @@
     },
     "get_v1_linkedin_profile_posts": {
       "url": "https://www.linkedin.com/in/sugus-du-36baa22a3/"
+    },
+    "get_v1_redbook_post": {
+      "note_id": "697c0eee000000000a03c308"
+    },
+    "get_v1_redbook_post_comments": {
+      "note_id": "697c0eee000000000a03c308"
+    },
+    "get_v1_redbook_post_comments_replies": {
+      "comment_id": "69da730e00000000160162d2",
+      "note_id": "697c0eee000000000a03c308"
+    },
+    "get_v1_redbook_post_video": {
+      "note_id": "68b39115000000001c037dad"
+    },
+    "get_v1_redbook_profile": {
+      "user_id": "61b46d790000000010008153"
+    },
+    "get_v1_redbook_profile_favorites": {
+      "user_id": "5a8cf39111be10466d285d6b"
+    },
+    "get_v1_redbook_profile_posts": {
+      "user_id": "61b46d790000000010008153"
+    },
+    "get_v1_redbook_search": {
+      "query": "美食推荐"
+    },
+    "get_v1_redbook_search_users": {
+      "query": "美食博主"
+    },
+    "get_v1_redbook_topic": {
+      "page_id": "5c1cc866febed9000184b7c1"
+    },
+    "get_v1_redbook_topic_posts": {
+      "page_id": "5c1cc866febed9000184b7c1"
     },
     "get_v1_reddit_post": {
       "post_id": "1vshxgx"
