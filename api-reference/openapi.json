@@ -2183,7 +2183,7 @@
   "paths": {
     "/v1/account/quota": {
       "get": {
-        "description": "Use this operation to return account and api key quota. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e.",
+        "description": "Use this operation to return account and api key quota.",
         "operationId": "get_v1_account_quota",
         "responses": {
           "200": {
@@ -2247,7 +2247,7 @@
     },
     "/v1/documents/parse": {
       "post": {
-        "description": "Use this operation to parse an https document url. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to parse an https document url.",
         "operationId": "post_v1_documents_parse",
         "parameters": [
           {
@@ -2566,7 +2566,7 @@
     },
     "/v1/documents/{document_id}": {
       "get": {
-        "description": "Use this operation to read a parsed document owned by this api key. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged.",
+        "description": "Use this operation to read a parsed document owned by this api key.",
         "operationId": "get_v1_documents_document_id",
         "parameters": [
           {
@@ -2770,7 +2770,7 @@
     },
     "/v1/instagram/post": {
       "get": {
-        "description": "Use this operation to get instagram post details. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get instagram post details.",
         "operationId": "get_v1_instagram_post",
         "parameters": [
           {
@@ -3101,7 +3101,7 @@
     },
     "/v1/instagram/post/comments": {
       "get": {
-        "description": "Use this operation to get instagram post comments. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pass the Instagram post shortcode as post_code; do not pass a full URL. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get instagram post comments. Pass the Instagram post shortcode as post_code; do not pass a full URL. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_post_comments",
         "parameters": [
           {
@@ -3447,7 +3447,7 @@
     },
     "/v1/instagram/profile": {
       "get": {
-        "description": "Use this operation to get instagram profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get instagram profile.",
         "operationId": "get_v1_instagram_profile",
         "parameters": [
           {
@@ -3775,7 +3775,7 @@
     },
     "/v1/instagram/profile/posts": {
       "get": {
-        "description": "Use this operation to get instagram profile posts. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get instagram profile posts. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_profile_posts",
         "parameters": [
           {
@@ -4108,7 +4108,7 @@
     },
     "/v1/instagram/profile/reels": {
       "get": {
-        "description": "Use this operation to get instagram profile reels. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get instagram profile reels. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_profile_reels",
         "parameters": [
           {
@@ -4441,7 +4441,7 @@
     },
     "/v1/instagram/search": {
       "get": {
-        "description": "Use this operation to search instagram. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search instagram. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_search",
         "parameters": [
           {
@@ -4774,7 +4774,7 @@
     },
     "/v1/instagram/search/hashtags": {
       "get": {
-        "description": "Use this operation to search instagram hashtags. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search instagram hashtags. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_search_hashtags",
         "parameters": [
           {
@@ -5107,7 +5107,7 @@
     },
     "/v1/instagram/search/locations": {
       "get": {
-        "description": "Use this operation to search instagram locations. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search instagram locations.",
         "operationId": "get_v1_instagram_search_locations",
         "parameters": [
           {
@@ -5440,7 +5440,7 @@
     },
     "/v1/instagram/search/music": {
       "get": {
-        "description": "Use this operation to search instagram music. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search instagram music. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_search_music",
         "parameters": [
           {
@@ -5773,7 +5773,7 @@
     },
     "/v1/instagram/search/profiles": {
       "get": {
-        "description": "Use this operation to search instagram profiles. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search instagram profiles. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_search_profiles",
         "parameters": [
           {
@@ -6106,7 +6106,7 @@
     },
     "/v1/instagram/search/reels": {
       "get": {
-        "description": "Use this operation to search instagram reels. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search instagram reels. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_instagram_search_reels",
         "parameters": [
           {
@@ -6439,7 +6439,7 @@
     },
     "/v1/linkedin/company": {
       "get": {
-        "description": "Use this operation to get a linkedin company. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a linkedin company.",
         "operationId": "get_v1_linkedin_company",
         "parameters": [
           {
@@ -6767,7 +6767,7 @@
     },
     "/v1/linkedin/company/posts": {
       "get": {
-        "description": "Use this operation to get linkedin company posts. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get linkedin company posts. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_linkedin_company_posts",
         "parameters": [
           {
@@ -7100,7 +7100,7 @@
     },
     "/v1/linkedin/email": {
       "get": {
-        "description": "Use this operation to look up an email address from a linkedin profile url. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to look up an email address from a linkedin profile url.",
         "operationId": "get_v1_linkedin_email",
         "parameters": [
           {
@@ -7361,7 +7361,7 @@
     },
     "/v1/linkedin/jobs/search": {
       "get": {
-        "description": "Use this operation to search linkedin jobs. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search linkedin jobs. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_linkedin_jobs_search",
         "parameters": [
           {
@@ -7694,7 +7694,7 @@
     },
     "/v1/linkedin/phone": {
       "get": {
-        "description": "Use this operation to look up a phone number from a linkedin profile url. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to look up a phone number from a linkedin profile url.",
         "operationId": "get_v1_linkedin_phone",
         "parameters": [
           {
@@ -7955,7 +7955,7 @@
     },
     "/v1/linkedin/post": {
       "get": {
-        "description": "Use this operation to get a linkedin post. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a linkedin post.",
         "operationId": "get_v1_linkedin_post",
         "parameters": [
           {
@@ -8283,7 +8283,7 @@
     },
     "/v1/linkedin/post/comments": {
       "get": {
-        "description": "Use this operation to get linkedin post comments. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get linkedin post comments. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_linkedin_post_comments",
         "parameters": [
           {
@@ -8616,7 +8616,7 @@
     },
     "/v1/linkedin/profile": {
       "get": {
-        "description": "Use this operation to fetch a public linkedin profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to fetch a public linkedin profile.",
         "operationId": "get_v1_linkedin_profile",
         "parameters": [
           {
@@ -8877,7 +8877,7 @@
     },
     "/v1/linkedin/profile/posts": {
       "get": {
-        "description": "Use this operation to get linkedin profile posts. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get linkedin profile posts. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_linkedin_profile_posts",
         "parameters": [
           {
@@ -9210,7 +9210,7 @@
     },
     "/v1/redbook/post": {
       "get": {
-        "description": "Use this operation to get a Xiaohongshu note (image note detail). Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a Xiaohongshu note (image note detail).",
         "operationId": "get_v1_redbook_post",
         "parameters": [
           {
@@ -9541,7 +9541,7 @@
     },
     "/v1/redbook/post/comments": {
       "get": {
-        "description": "Use this operation to get the comments on a Xiaohongshu note. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get the comments on a Xiaohongshu note. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_redbook_post_comments",
         "parameters": [
           {
@@ -9880,7 +9880,7 @@
     },
     "/v1/redbook/post/comments/replies": {
       "get": {
-        "description": "Use this operation to get the replies to a Xiaohongshu note comment (requires comment_id). Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get the replies to a Xiaohongshu note comment (requires comment_id). Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_redbook_post_comments_replies",
         "parameters": [
           {
@@ -10219,7 +10219,7 @@
     },
     "/v1/redbook/post/video": {
       "get": {
-        "description": "Use this operation to get a Xiaohongshu video note detail. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a Xiaohongshu video note detail.",
         "operationId": "get_v1_redbook_post_video",
         "parameters": [
           {
@@ -10550,7 +10550,7 @@
     },
     "/v1/redbook/profile": {
       "get": {
-        "description": "Use this operation to get a Xiaohongshu user profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a Xiaohongshu user profile.",
         "operationId": "get_v1_redbook_profile",
         "parameters": [
           {
@@ -10881,7 +10881,7 @@
     },
     "/v1/redbook/profile/favorites": {
       "get": {
-        "description": "Use this operation to get the notes favorited by a Xiaohongshu profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get the notes favorited by a Xiaohongshu profile. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_redbook_profile_favorites",
         "parameters": [
           {
@@ -11217,7 +11217,7 @@
     },
     "/v1/redbook/profile/posts": {
       "get": {
-        "description": "Use this operation to get the notes posted by a Xiaohongshu profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get the notes posted by a Xiaohongshu profile. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_redbook_profile_posts",
         "parameters": [
           {
@@ -11553,7 +11553,7 @@
     },
     "/v1/redbook/search": {
       "get": {
-        "description": "Use this operation to search Xiaohongshu notes. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search Xiaohongshu notes. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_redbook_search",
         "parameters": [
           {
@@ -11895,7 +11895,7 @@
     },
     "/v1/redbook/search/users": {
       "get": {
-        "description": "Use this operation to search Xiaohongshu users. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search Xiaohongshu users. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_redbook_search_users",
         "parameters": [
           {
@@ -12228,7 +12228,7 @@
     },
     "/v1/redbook/topic": {
       "get": {
-        "description": "Use this operation to get a Xiaohongshu topic. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a Xiaohongshu topic.",
         "operationId": "get_v1_redbook_topic",
         "parameters": [
           {
@@ -12556,7 +12556,7 @@
     },
     "/v1/redbook/topic/posts": {
       "get": {
-        "description": "Use this operation to get the notes under a Xiaohongshu topic. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get the notes under a Xiaohongshu topic. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_redbook_topic_posts",
         "parameters": [
           {
@@ -12892,7 +12892,7 @@
     },
     "/v1/reddit/post": {
       "get": {
-        "description": "Use this operation to get a reddit post. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a reddit post.",
         "operationId": "get_v1_reddit_post",
         "parameters": [
           {
@@ -13220,7 +13220,7 @@
     },
     "/v1/reddit/post/comments": {
       "get": {
-        "description": "Use this operation to get reddit post comments. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get reddit post comments. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_reddit_post_comments",
         "parameters": [
           {
@@ -13553,7 +13553,7 @@
     },
     "/v1/reddit/profile": {
       "get": {
-        "description": "Use this operation to get a reddit profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a reddit profile.",
         "operationId": "get_v1_reddit_profile",
         "parameters": [
           {
@@ -13881,7 +13881,7 @@
     },
     "/v1/reddit/profile/comments": {
       "get": {
-        "description": "Use this operation to get reddit profile comments. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get reddit profile comments. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_reddit_profile_comments",
         "parameters": [
           {
@@ -14214,7 +14214,7 @@
     },
     "/v1/reddit/profile/posts": {
       "get": {
-        "description": "Use this operation to get reddit profile posts. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get reddit profile posts. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_reddit_profile_posts",
         "parameters": [
           {
@@ -14547,7 +14547,7 @@
     },
     "/v1/reddit/search": {
       "get": {
-        "description": "Use this operation to search reddit. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search reddit. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_reddit_search",
         "parameters": [
           {
@@ -14880,7 +14880,7 @@
     },
     "/v1/reddit/search/suggestions": {
       "get": {
-        "description": "Use this operation to get reddit search suggestions. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get reddit search suggestions.",
         "operationId": "get_v1_reddit_search_suggestions",
         "parameters": [
           {
@@ -15210,7 +15210,7 @@
     },
     "/v1/reddit/search/trending": {
       "get": {
-        "description": "Use this operation to get reddit trending searches. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get reddit trending searches.",
         "operationId": "get_v1_reddit_search_trending",
         "parameters": [],
         "responses": {
@@ -15536,7 +15536,7 @@
     },
     "/v1/reddit/subreddit": {
       "get": {
-        "description": "Use this operation to get a subreddit. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get a subreddit.",
         "operationId": "get_v1_reddit_subreddit",
         "parameters": [
           {
@@ -15864,7 +15864,7 @@
     },
     "/v1/reddit/subreddit/posts": {
       "get": {
-        "description": "Use this operation to get subreddit posts. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get subreddit posts. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_reddit_subreddit_posts",
         "parameters": [
           {
@@ -16197,7 +16197,7 @@
     },
     "/v1/scraping/jina-reader": {
       "get": {
-        "description": "Use this operation to scrape a web page into readable markdown content. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to scrape a web page into readable markdown content.",
         "operationId": "get_v1_scraping_jina_reader",
         "parameters": [
           {
@@ -16466,7 +16466,7 @@
     },
     "/v1/seo/backlinks": {
       "post": {
-        "description": "Use this operation to return live backlinks for a domain, subdomain, or page. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return live backlinks for a domain, subdomain, or page.",
         "operationId": "post_v1_seo_backlinks",
         "parameters": [
           {
@@ -16805,7 +16805,7 @@
     },
     "/v1/seo/google-ads/ad-traffic": {
       "post": {
-        "description": "Use this operation to return Google Ads impression, click, cost, CTR, and average CPC forecasts for up to 100 keywords. Requires bid and match; forecasting period defaults to next_month unless date_from/date_to or date_interval is set. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return Google Ads impression, click, cost, CTR, and average CPC forecasts for up to 100 keywords. Requires bid and match; forecasting period defaults to next_month unless date_from/date_to or date_interval is set.",
         "operationId": "post_v1_seo_google_ads_ad_traffic",
         "parameters": [
           {
@@ -17130,7 +17130,7 @@
     },
     "/v1/seo/google-ads/search-volume": {
       "post": {
-        "description": "Use this operation to return Google Ads keyword search volume, CPC, and competition for up to 100 keywords in a single call. Time range, location, and language apply to the whole batch. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return Google Ads keyword search volume, CPC, and competition for up to 100 keywords in a single call. Time range, location, and language apply to the whole batch.",
         "operationId": "post_v1_seo_google_ads_search_volume",
         "parameters": [
           {
@@ -17429,7 +17429,7 @@
     },
     "/v1/seo/google-serp": {
       "post": {
-        "description": "Use this operation to return live structured google keyword serp results. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return live structured google keyword serp results.",
         "operationId": "post_v1_seo_google_serp",
         "parameters": [
           {
@@ -17771,7 +17771,7 @@
     },
     "/v1/seo/google-trends": {
       "post": {
-        "description": "Use this operation to return live relative keyword popularity and related trends. You can specify up to 5 keywords in a single call. Time range, location, and language apply to the whole batch. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return live relative keyword popularity and related trends. You can specify up to 5 keywords in a single call. Time range, location, and language apply to the whole batch.",
         "operationId": "post_v1_seo_google_trends",
         "parameters": [
           {
@@ -18105,7 +18105,7 @@
     },
     "/v1/seo/ranked-keywords": {
       "post": {
-        "description": "Use this operation to return organic keywords ranked by a target domain or page. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return organic keywords ranked by a target domain or page.",
         "operationId": "post_v1_seo_ranked_keywords",
         "parameters": [
           {
@@ -18434,7 +18434,7 @@
     },
     "/v1/text/humanize": {
       "post": {
-        "description": "Use this operation to rewrite text naturally while preserving meaning. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to rewrite text naturally while preserving meaning.",
         "operationId": "post_v1_text_humanize",
         "parameters": [
           {
@@ -18753,7 +18753,7 @@
     },
     "/v1/tiktok/hashtag": {
       "get": {
-        "description": "Use this operation to get tiktok hashtag details. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get tiktok hashtag details.",
         "operationId": "get_v1_tiktok_hashtag",
         "parameters": [
           {
@@ -19081,7 +19081,7 @@
     },
     "/v1/tiktok/music": {
       "get": {
-        "description": "Use this operation to get tiktok music details. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get tiktok music details.",
         "operationId": "get_v1_tiktok_music",
         "parameters": [
           {
@@ -19409,7 +19409,7 @@
     },
     "/v1/tiktok/profile": {
       "get": {
-        "description": "Use this operation to get tiktok profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get tiktok profile.",
         "operationId": "get_v1_tiktok_profile",
         "parameters": [
           {
@@ -19743,7 +19743,7 @@
     },
     "/v1/tiktok/search/hashtags": {
       "get": {
-        "description": "Use this operation to search tiktok hashtags. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search tiktok hashtags. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_tiktok_search_hashtags",
         "parameters": [
           {
@@ -20079,7 +20079,7 @@
     },
     "/v1/tiktok/search/live": {
       "get": {
-        "description": "Use this operation to search tiktok live rooms. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search tiktok live rooms. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_tiktok_search_live",
         "parameters": [
           {
@@ -20415,7 +20415,7 @@
     },
     "/v1/tiktok/search/music": {
       "get": {
-        "description": "Use this operation to search tiktok music. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search tiktok music. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_tiktok_search_music",
         "parameters": [
           {
@@ -20751,7 +20751,7 @@
     },
     "/v1/tiktok/search/profiles": {
       "get": {
-        "description": "Use this operation to search tiktok profiles. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search tiktok profiles. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_tiktok_search_profiles",
         "parameters": [
           {
@@ -21087,7 +21087,7 @@
     },
     "/v1/tiktok/search/videos": {
       "get": {
-        "description": "Use this operation to search tiktok videos. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search tiktok videos. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_tiktok_search_videos",
         "parameters": [
           {
@@ -21423,7 +21423,7 @@
     },
     "/v1/tiktok/transcribe": {
       "post": {
-        "description": "Use this operation to transcribe tiktok video audio. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. This is separately billed. Use it only when audio transcription is explicitly requested or approved; do not silently fall back from caption extraction. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to transcribe tiktok video audio. This is separately billed. Use it only when audio transcription is explicitly requested or approved; do not silently fall back from caption extraction.",
         "operationId": "post_v1_tiktok_transcribe",
         "parameters": [
           {
@@ -21742,7 +21742,7 @@
     },
     "/v1/tiktok/transcript": {
       "get": {
-        "description": "Use this operation to extract an existing tiktok caption track. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Use this existing-caption operation before any separately billed transcription. A 422 means captions are unavailable; select another resource or obtain explicit approval for an alternative, and do not retry unchanged. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to extract an existing tiktok caption track. Use this existing-caption operation before any separately billed transcription. A 422 means captions are unavailable; select another resource or obtain explicit approval for an alternative, and do not retry unchanged.",
         "operationId": "get_v1_tiktok_transcript",
         "parameters": [
           {
@@ -22054,7 +22054,7 @@
     },
     "/v1/tiktok/video": {
       "get": {
-        "description": "Use this operation to get tiktok video details. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get tiktok video details.",
         "operationId": "get_v1_tiktok_video",
         "parameters": [
           {
@@ -22382,7 +22382,7 @@
     },
     "/v1/tiktok/video/comments": {
       "get": {
-        "description": "Use this operation to get tiktok video comments. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get tiktok video comments. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_tiktok_video_comments",
         "parameters": [
           {
@@ -22718,7 +22718,7 @@
     },
     "/v1/twitter/post": {
       "get": {
-        "description": "Use this operation to get an x post. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get an x post.",
         "operationId": "get_v1_twitter_post",
         "parameters": [
           {
@@ -23046,7 +23046,7 @@
     },
     "/v1/twitter/post/comments": {
       "get": {
-        "description": "Use this operation to get x post comments. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get x post comments. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_twitter_post_comments",
         "parameters": [
           {
@@ -23379,7 +23379,7 @@
     },
     "/v1/twitter/profile": {
       "get": {
-        "description": "Use this operation to get an x profile. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get an x profile.",
         "operationId": "get_v1_twitter_profile",
         "parameters": [
           {
@@ -23707,7 +23707,7 @@
     },
     "/v1/twitter/profile/media": {
       "get": {
-        "description": "Use this operation to get x profile media. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get x profile media. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_twitter_profile_media",
         "parameters": [
           {
@@ -24040,7 +24040,7 @@
     },
     "/v1/twitter/profile/posts": {
       "get": {
-        "description": "Use this operation to get x profile posts. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get x profile posts. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_twitter_profile_posts",
         "parameters": [
           {
@@ -24373,7 +24373,7 @@
     },
     "/v1/twitter/search": {
       "get": {
-        "description": "Use this operation to search x posts. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to search x posts. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_twitter_search",
         "parameters": [
           {
@@ -24706,7 +24706,7 @@
     },
     "/v1/twitter/trending": {
       "get": {
-        "description": "Use this operation to get x trending topics. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to get x trending topics.",
         "operationId": "get_v1_twitter_trending",
         "parameters": [],
         "responses": {
@@ -25032,7 +25032,7 @@
     },
     "/v1/usage/history": {
       "get": {
-        "description": "Use this operation to return api usage history. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow. Correct a 400 invalid-input error; do not retry unchanged.",
+        "description": "Use this operation to return api usage history. Pagination: omit cursor on the first request. When has_more is true, pass next_cursor unchanged as cursor. Cursors are opaque; do not construct, modify, or reuse them outside this pagination flow.",
         "operationId": "get_v1_usage_history",
         "parameters": [
           {
@@ -25158,7 +25158,7 @@
     },
     "/v1/usage/summary": {
       "get": {
-        "description": "Use this operation to return api usage summary. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged.",
+        "description": "Use this operation to return api usage summary.",
         "operationId": "get_v1_usage_summary",
         "parameters": [
           {
@@ -25278,7 +25278,7 @@
     },
     "/v1/youtube/channel/email": {
       "get": {
-        "description": "Use this operation to find a public business email for a youtube channel. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to find a public business email for a youtube channel.",
         "operationId": "get_v1_youtube_channel_email",
         "parameters": [
           {
@@ -25551,7 +25551,7 @@
     },
     "/v1/youtube/transcript": {
       "get": {
-        "description": "Use this operation to extract an existing youtube subtitle track. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Use this existing-caption operation before any separately billed transcription. A 422 means captions are unavailable; select another resource or obtain explicit approval for an alternative, and do not retry unchanged. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to extract an existing youtube subtitle track. Use this existing-caption operation before any separately billed transcription. A 422 means captions are unavailable; select another resource or obtain explicit approval for an alternative, and do not retry unchanged.",
         "operationId": "get_v1_youtube_transcript",
         "parameters": [
           {
