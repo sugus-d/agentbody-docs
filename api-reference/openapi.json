@@ -420,6 +420,28 @@
           }
         }
       },
+      "GoogleAdsAdTrafficSuccess": {
+        "content": {
+          "application/json": {
+            "example": {
+              "items": []
+            },
+            "schema": {
+              "$ref": "#/components/schemas/GoogleAdsAdTrafficResult"
+            }
+          }
+        },
+        "description": "Historical ad traffic metrics.",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Gateway request identifier for support and audit.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
       "HumanizeSuccess": {
         "content": {
           "application/json": {
@@ -1132,6 +1154,51 @@
           "markdown",
           "blocks",
           "markdown_spans"
+        ],
+        "type": "object"
+      },
+      "GoogleAdsAdTrafficResult": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "average_cpc": {
+                  "type": "number"
+                },
+                "bid": {
+                  "type": "integer"
+                },
+                "clicks": {
+                  "type": "number"
+                },
+                "cost": {
+                  "type": "number"
+                },
+                "date_interval": {
+                  "type": "string"
+                },
+                "keyword": {
+                  "type": "string"
+                },
+                "language_code": {
+                  "type": "string"
+                },
+                "location_code": {
+                  "type": "integer"
+                },
+                "match": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
         ],
         "type": "object"
       },
@@ -12936,55 +13003,378 @@
         "x-agentbody-api-id": "seo.backlinks"
       }
     },
-    "/v1/seo/google-ads-search-volume": {
-      "get": {
-        "description": "Use this operation to return google ads keyword search volume, cpc, and competition for 1-100 keywords in a single call. Repeat the keyword query parameter once per keyword (keyword=a\u0026keyword=b). Location, language, search partners, and sort options apply to the whole batch. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
-        "operationId": "get_v1_seo_google_ads_search_volume",
+    "/v1/seo/google-ads/ad-traffic": {
+      "post": {
+        "description": "Use this operation to return Google Ads impression, click, cost, CTR, and average CPC forecasts for up to 100 keywords. Requires bid and match; forecasting period defaults to next_month unless date_from/date_to or date_interval is set. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "post_v1_seo_google_ads_ad_traffic",
         "parameters": [
           {
-            "explode": true,
-            "in": "query",
-            "name": "keyword",
-            "required": true,
-            "schema": {
-              "items": {
-                "type": "string"
-              },
-              "maxItems": 100,
-              "minItems": 1,
-              "type": "array"
-            },
-            "style": "form"
-          },
-          {
-            "in": "query",
-            "name": "location_code",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "in": "query",
-            "name": "language_code",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "search_partners",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "in": "query",
-            "name": "sort_by",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/IdempotencyKey"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "bid": {
+                    "type": "integer"
+                  },
+                  "date_from": {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  "date_interval": {
+                    "enum": [
+                      "next_week",
+                      "next_month",
+                      "next_quarter"
+                    ],
+                    "type": "string"
+                  },
+                  "date_to": {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  "keywords": {
+                    "items": {
+                      "maxLength": 100,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 100,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "language_code": {
+                    "type": "string"
+                  },
+                  "location_code": {
+                    "type": "integer"
+                  },
+                  "match": {
+                    "enum": [
+                      "exact",
+                      "broad",
+                      "phrase"
+                    ],
+                    "type": "string"
+                  },
+                  "search_partners": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "keywords",
+                  "bid",
+                  "match"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoogleAdsAdTrafficSuccess"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Return Google Ads ad traffic impression, click, cost, CTR, and average CPC forecasts",
+        "tags": [
+          "seo"
+        ],
+        "x-agentbody-api-id": "seo.google_ads.ad_traffic"
+      }
+    },
+    "/v1/seo/google-ads/search-volume": {
+      "post": {
+        "description": "Use this operation to return Google Ads keyword search volume, CPC, and competition for up to 100 keywords in a single call. Time range, location, and language apply to the whole batch. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "operationId": "post_v1_seo_google_ads_search_volume",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "keywords": {
+                    "items": {
+                      "maxLength": 100,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "maxItems": 100,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "language_code": {
+                    "type": "string"
+                  },
+                  "location_code": {
+                    "type": "integer"
+                  },
+                  "search_partners": {
+                    "type": "boolean"
+                  },
+                  "sort_by": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "keywords"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/SEOSearchVolumeSuccess"
@@ -13234,7 +13624,7 @@
         "tags": [
           "seo"
         ],
-        "x-agentbody-api-id": "seo.search_volume"
+        "x-agentbody-api-id": "seo.google_ads.search_volume"
       }
     },
     "/v1/seo/google-serp": {
@@ -13581,7 +13971,7 @@
     },
     "/v1/seo/google-trends": {
       "post": {
-        "description": "Use this operation to return live relative keyword popularity and related trends. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
+        "description": "Use this operation to return live relative keyword popularity and related trends. You can specify up to 5 keywords in a single call. Time range, location, and language apply to the whole batch. Authenticate with Authorization: Bearer \u003cAGENTBODY_API_KEY\u003e. Correct a 400 invalid-input error; do not retry unchanged. Retry only declared 502, 503, or 504 responses with backoff.",
         "operationId": "post_v1_seo_google_trends",
         "parameters": [
           {
@@ -21760,9 +22150,6 @@
     "get_v1_scraping_jina_reader": {
       "url": "https://agentbody.io/"
     },
-    "get_v1_seo_google_ads_search_volume": {
-      "keyword": "agentbody"
-    },
     "get_v1_tiktok_hashtag": {
       "hashtag_id": "8313"
     },
@@ -21813,6 +22200,9 @@
       "backlinks_status_type": "live",
       "limit": 1,
       "target": "agentbody.io"
+    },
+    "post_v1_seo_google_ads_search_volume": {
+      "keywords": "agentbody"
     },
     "post_v1_seo_google_serp": {
       "depth": 1,
