@@ -658,6 +658,38 @@
           }
         }
       },
+      "MusicDownloadSuccess": {
+        "content": {
+          "application/json": {
+            "example": {
+              "audio_format": "mp3",
+              "audio_url": "https://example.com/audio.mp3",
+              "bitrate": 192000,
+              "bytes": 4194304,
+              "channel_title": "Example Channel",
+              "content_type": "audio/mpeg",
+              "duration_seconds": 180,
+              "size_mb": 4,
+              "title": "Example Track",
+              "url": "https://www.youtube.com/watch?v=Gef1KePPRoI",
+              "video_id": "Gef1KePPRoI"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/MusicDownloadResult"
+            }
+          }
+        },
+        "description": "Retained audio file and normalized public track metadata.",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Gateway request identifier for support and audit.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
       "SEOBacklinksSuccess": {
         "content": {
           "application/json": {
@@ -1058,6 +1090,33 @@
           }
         },
         "description": "Aggregated usage for this key.",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Gateway request identifier for support and audit.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "VideoDownloadSuccess": {
+        "content": {
+          "application/json": {
+            "example": {
+              "expires_at": "2026-01-08T00:00:00Z",
+              "file_size_mb": 15.2,
+              "play_url": "https://example.com/play.mp4",
+              "storage_url": "https://example.com/storage/video.mp4",
+              "ttl": "1w",
+              "video_id": "7050551461734042926"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/VideoDownloadResult"
+            }
+          }
+        },
+        "description": "Downloaded TikTok media links with persistent storage.",
         "headers": {
           "X-Request-Id": {
             "description": "Gateway request identifier for support and audit.",
@@ -1671,6 +1730,86 @@
         ],
         "type": "object"
       },
+      "MusicDownloadRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "audio_format": {
+            "default": "mp3",
+            "enum": [
+              "mp3",
+              "m4a",
+              "webm"
+            ],
+            "type": "string"
+          },
+          "region": {
+            "default": "US",
+            "maxLength": 2,
+            "minLength": 2,
+            "pattern": "^[A-Z]{2}$",
+            "type": "string"
+          },
+          "url": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "type": "object"
+      },
+      "MusicDownloadResult": {
+        "additionalProperties": false,
+        "properties": {
+          "audio_format": {
+            "type": "string"
+          },
+          "audio_url": {
+            "format": "uri",
+            "type": "string"
+          },
+          "bitrate": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "bytes": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "channel_title": {
+            "type": "string"
+          },
+          "content_type": {
+            "type": "string"
+          },
+          "duration_seconds": {
+            "type": "number"
+          },
+          "size_mb": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "format": "uri",
+            "type": "string"
+          },
+          "video_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_id",
+          "url",
+          "title",
+          "audio_url",
+          "content_type",
+          "audio_format"
+        ],
+        "type": "object"
+      },
       "SEOBacklinksResult": {
         "additionalProperties": false,
         "properties": {
@@ -2121,6 +2260,64 @@
           "url",
           "content",
           "published_time"
+        ],
+        "type": "object"
+      },
+      "VideoDownloadRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "ttl": {
+            "default": "1w",
+            "enum": [
+              "1d",
+              "3d",
+              "1w",
+              "1m",
+              "1y",
+              "5y"
+            ],
+            "type": "string"
+          },
+          "url": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "type": "object"
+      },
+      "VideoDownloadResult": {
+        "additionalProperties": false,
+        "properties": {
+          "expires_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "file_size_mb": {
+            "type": "number"
+          },
+          "play_url": {
+            "format": "uri",
+            "type": "string"
+          },
+          "storage_url": {
+            "format": "uri",
+            "type": "string"
+          },
+          "ttl": {
+            "type": "string"
+          },
+          "video_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "video_id",
+          "play_url",
+          "storage_url",
+          "ttl"
         ],
         "type": "object"
       },
@@ -22716,6 +22913,325 @@
         "x-agentbody-api-id": "tiktok.video_comments"
       }
     },
+    "/v1/tiktok/video/download": {
+      "post": {
+        "description": "Use this operation to download the media file of a tiktok video. This is separately billed. The response contains a persistent storage URL that stays valid for the selected TTL plus the direct playback URL.",
+        "operationId": "post_v1_tiktok_video_download",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoDownloadRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/VideoDownloadSuccess"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "CONFLICT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "CONFLICT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Follow the documented Idempotency-Key behavior before retrying.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Download TikTok video media",
+        "tags": [
+          "tiktok"
+        ],
+        "x-agentbody-api-id": "tiktok.video_download"
+      }
+    },
     "/v1/twitter/post": {
       "get": {
         "description": "Use this operation to get an x post.",
@@ -25547,6 +26063,325 @@
           "youtube"
         ],
         "x-agentbody-api-id": "youtube.email_finder"
+      }
+    },
+    "/v1/youtube/music/download": {
+      "post": {
+        "description": "Use this operation to save the audio from one public YouTube or YouTube Music URL as MP3, M4A, or WebM. The response contains a retained audio file URL and normalized track metadata.",
+        "operationId": "post_v1_youtube_music_download",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MusicDownloadRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/MusicDownloadSuccess"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "CONFLICT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "CONFLICT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Follow the documented Idempotency-Key behavior before retrying.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Download YouTube music audio",
+        "tags": [
+          "youtube"
+        ],
+        "x-agentbody-api-id": "youtube.music_download"
       }
     },
     "/v1/youtube/transcript": {
