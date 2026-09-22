@@ -655,6 +655,40 @@
           }
         }
       },
+      "InstagramVideoDownloadSuccess": {
+        "content": {
+          "application/json": {
+            "example": {
+              "author_name": "Example Author",
+              "author_username": "example",
+              "comment_count": 310,
+              "duration_seconds": 29.5,
+              "like_count": 18420,
+              "media_type": "video",
+              "play_count": 512334,
+              "post_url": "https://www.instagram.com/reel/DWocNOhgmgg/",
+              "shortcode": "DWocNOhgmgg",
+              "text": "Example caption",
+              "thumbnail_url": "https://example.com/cover.jpg",
+              "video_content_type": "video/mp4",
+              "video_url": "https://api.apify.com/v2/key-value-stores/example/records/DWocNOhgmgg.mp4"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/InstagramVideoDownloadResult"
+            }
+          }
+        },
+        "description": "Retained Instagram media link and normalized public post metadata.",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Gateway request identifier for support and audit.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
       "LinkedInEmailSuccess": {
         "content": {
           "application/json": {
@@ -1824,6 +1858,78 @@
         ],
         "type": "object"
       },
+      "InstagramVideoDownloadRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "description": "Public Instagram video or Reel URL (instagram.com/reel/{shortcode}, /p/{shortcode}, /tv/{shortcode}, or share link).",
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "type": "object"
+      },
+      "InstagramVideoDownloadResult": {
+        "additionalProperties": false,
+        "properties": {
+          "author_name": {
+            "type": "string"
+          },
+          "author_username": {
+            "type": "string"
+          },
+          "comment_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "duration_seconds": {
+            "type": "number"
+          },
+          "like_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "play_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "post_url": {
+            "format": "uri",
+            "type": "string"
+          },
+          "shortcode": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "thumbnail_url": {
+            "format": "uri",
+            "type": "string"
+          },
+          "video_content_type": {
+            "type": "string"
+          },
+          "video_url": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "shortcode",
+          "post_url",
+          "video_url",
+          "video_content_type",
+          "media_type"
+        ],
+        "type": "object"
+      },
       "LinkedInEducation": {
         "additionalProperties": false,
         "properties": {
@@ -2933,7 +3039,7 @@
       "url": "https://agentbody.io"
     },
     "title": "AgentBody API",
-    "version": "2026-09-22"
+    "version": "2026-09-22.1"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -7829,6 +7935,325 @@
           "instagram"
         ],
         "x-agentbody-api-id": "instagram.search_reels"
+      }
+    },
+    "/v1/instagram/video/download": {
+      "post": {
+        "description": "Use this operation to save one public Instagram video or Reel as a retained MP4 file link with normalized post metadata.",
+        "operationId": "post_v1_instagram_video_download",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstagramVideoDownloadRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/InstagramVideoDownloadSuccess"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "CONFLICT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "CONFLICT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Follow the documented Idempotency-Key behavior before retrying.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Download an Instagram video",
+        "tags": [
+          "instagram"
+        ],
+        "x-agentbody-api-id": "instagram.video_download"
       }
     },
     "/v1/linkedin/company": {
@@ -29292,6 +29717,9 @@
     },
     "post_v1_douyin_video_download": {
       "url": "https://www.douyin.com/video/7577614489533680959"
+    },
+    "post_v1_instagram_video_download": {
+      "url": "https://www.instagram.com/reel/DWocNOhgmgg/"
     },
     "post_v1_seo_backlinks": {
       "backlinks_status_type": "live",
