@@ -581,15 +581,15 @@
         "content": {
           "application/json": {
             "example": {
-              "author_name": "盗月社食遇记",
+              "author_name": "\u76d7\u6708\u793e\u98df\u9047\u8bb0",
               "collect_count": 855021,
               "comment_count": 162235,
               "digg_count": 4037193,
               "duration_seconds": 1082.5,
               "id": "7577614489533680959",
               "share_count": 5135670,
-              "text": "这个贵州五线小城市…",
-              "title": "贵州美食探店",
+              "text": "\u8fd9\u4e2a\u8d35\u5dde\u4e94\u7ebf\u5c0f\u57ce\u5e02\u2026",
+              "title": "\u8d35\u5dde\u7f8e\u98df\u63a2\u5e97",
               "url": "https://www.douyin.com/video/7577614489533680959",
               "video_content_type": "video/mp4",
               "video_size_bytes": 215476832,
@@ -1483,6 +1483,42 @@
           }
         },
         "description": "Downloaded YouTube media link and normalized public video metadata.",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Gateway request identifier for support and audit.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "TikTokProfileFollowersSuccess": {
+        "content": {
+          "application/json": {
+            "example": {
+              "items": [
+                {
+                  "avatar_url": "https://example.com/avatar.jpg",
+                  "bio": "example bio",
+                  "display_name": "Example User",
+                  "followers": 1200,
+                  "following": 300,
+                  "likes": 45000,
+                  "profile_url": "https://www.tiktok.com/@example",
+                  "username": "example",
+                  "verified": false
+                }
+              ],
+              "total": 1,
+              "username": "khaby.lame"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/TikTokProfileFollowersResult"
+            }
+          }
+        },
+        "description": "Sample of public follower profiles for the TikTok account.",
         "headers": {
           "X-Request-Id": {
             "description": "Gateway request identifier for support and audit.",
@@ -2825,7 +2861,7 @@
         "additionalProperties": false,
         "properties": {
           "username": {
-            "description": "TikTok account reference — profile URL (tiktok.com/@handle), bare @handle, or plain username.",
+            "description": "TikTok account reference \u2014 profile URL (tiktok.com/@handle), bare @handle, or plain username.",
             "type": "string"
           }
         },
@@ -3405,6 +3441,92 @@
           "video_content_type",
           "format",
           "quality"
+        ],
+        "type": "object"
+      },
+      "TikTokProfileFollowersRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "max_results": {
+            "default": 50,
+            "description": "Maximum number of follower profiles to return (1-50).",
+            "format": "int32",
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "username": {
+            "description": "TikTok account reference \u2014 profile URL (tiktok.com/@handle), bare @handle, or plain username. The account must be public.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "username"
+        ],
+        "type": "object"
+      },
+      "TikTokProfileFollowersResult": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "avatar_url": {
+                  "format": "uri",
+                  "type": "string"
+                },
+                "bio": {
+                  "type": "string"
+                },
+                "display_name": {
+                  "type": "string"
+                },
+                "followers": {
+                  "format": "int64",
+                  "type": "integer"
+                },
+                "following": {
+                  "format": "int64",
+                  "type": "integer"
+                },
+                "likes": {
+                  "format": "int64",
+                  "type": "integer"
+                },
+                "profile_url": {
+                  "format": "uri",
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "verified": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "username",
+                "profile_url",
+                "verified"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "total": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "username": {
+            "description": "The normalized username of the profile whose followers were listed.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "total",
+          "items"
         ],
         "type": "object"
       }
@@ -4335,7 +4457,7 @@
     },
     "/v1/douyin/video/download": {
       "post": {
-        "description": "Use this operation to download the media of one public Douyin (抖音) video as an MP4 file link with normalized video metadata. Accepts douyin.com video URLs, iesdouyin share links, v.douyin.com short links, and bare numeric video IDs.",
+        "description": "Use this operation to download the media of one public Douyin (\u6296\u97f3) video as an MP4 file link with normalized video metadata. Accepts douyin.com video URLs, iesdouyin share links, v.douyin.com short links, and bare numeric video IDs.",
         "operationId": "post_v1_douyin_video_download",
         "parameters": [
           {
@@ -11732,7 +11854,7 @@
     },
     "/v1/linkedin/video/download": {
       "post": {
-        "description": "Downloads the video from a public LinkedIn post. The actor saves the file into a persistent key-value store and returns a client-downloadable link.\n\nUse the `quality` parameter to control file size and cost. Higher quality produces larger files.\n\n\u003cPricingNotice\u003eONE CALL COSTS $0.50. QUALITY DEFAULTS TO 480P.\u003c/PricingNotice\u003e",
+        "description": "Downloads the video from a public LinkedIn post. The actor saves the file into a persistent key-value store and returns a client-downloadable link.\n\nUse the `quality` parameter to control file size and cost. Higher quality produces larger files.\n\n<PricingNotice>ONE CALL COSTS $0.50. QUALITY DEFAULTS TO 480P.</PricingNotice>",
         "operationId": "post_v1_linkedin_video_download",
         "requestBody": {
           "content": {
@@ -31241,6 +31363,325 @@
         ],
         "x-agentbody-api-id": "youtube.video_download"
       }
+    },
+    "/v1/tiktok/profile/followers": {
+      "post": {
+        "description": "Use this operation to list a sample of public follower accounts for one TikTok profile. Pass a tiktok.com profile URL, a bare @handle, or a plain username. The response contains up to 50 follower profiles with public metadata. Only public accounts are supported; the returned list is a sample of the follower set, not the complete follower list.",
+        "operationId": "post_v1_tiktok_profile_followers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TikTokProfileFollowersRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/TikTokProfileFollowersSuccess"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "CONFLICT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "CONFLICT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Follow the documented Idempotency-Key behavior before retrying.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List TikTok profile followers",
+        "tags": [
+          "tiktok"
+        ],
+        "x-agentbody-api-id": "tiktok.profile_followers"
+      }
     }
   },
   "security": [
@@ -31324,10 +31765,10 @@
       "user_id": "61b46d790000000010008153"
     },
     "get_v1_redbook_search": {
-      "query": "美食推荐"
+      "query": "\u7f8e\u98df\u63a8\u8350"
     },
     "get_v1_redbook_search_users": {
-      "query": "美食博主"
+      "query": "\u7f8e\u98df\u535a\u4e3b"
     },
     "get_v1_redbook_topic": {
       "page_id": "5c1cc866febed9000184b7c1"
