@@ -1032,6 +1032,46 @@
           }
         }
       },
+      "TikTokHighlightPostsSuccess": {
+        "content": {
+          "application/json": {
+            "example": {
+              "items": [
+                {
+                  "comment_count": 36,
+                  "cover_url": "https://example.com/cover.jpeg",
+                  "created_at": "2026-07-02T14:38:34.000Z",
+                  "duration_seconds": 45,
+                  "id": "7658310975350689037",
+                  "like_count": 842,
+                  "music_title": "original sound - keenyakelly",
+                  "play_count": 12540,
+                  "region": "US",
+                  "share_count": 14,
+                  "title": "Day 3 Challenge Recap",
+                  "video_url": "https://v16m.tiktokcdn.com/highlight.mp4",
+                  "video_url_watermark": "https://v16m.tiktokcdn.com/highlight-wm.mp4"
+                }
+              ],
+              "total": 1,
+              "username": "keenyakelly"
+            },
+            "schema": {
+              "$ref": "#/components/schemas/TikTokHighlightPostsResult"
+            }
+          }
+        },
+        "description": "Public highlight posts for the TikTok account with direct media URLs.",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Gateway request identifier for support and audit.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        }
+      },
       "TikTokProfileFollowersSuccess": {
         "content": {
           "application/json": {
@@ -3058,6 +3098,110 @@
         "required": [
           "video_url",
           "audio_url"
+        ],
+        "type": "object"
+      },
+      "TikTokHighlightItem": {
+        "additionalProperties": false,
+        "properties": {
+          "comment_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "cover_url": {
+            "format": "uri",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Highlight post publish time (RFC3339) when reported upstream.",
+            "type": "string"
+          },
+          "duration_seconds": {
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          },
+          "image_urls": {
+            "description": "Full-resolution image URLs for photo-type highlight posts.",
+            "items": {
+              "format": "uri",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "like_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "music_title": {
+            "type": "string"
+          },
+          "play_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "region": {
+            "type": "string"
+          },
+          "share_count": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "video_url": {
+            "description": "Direct no-watermark highlight video URL (short-lived upstream CDN link). Empty for photo posts.",
+            "format": "uri",
+            "type": "string"
+          },
+          "video_url_watermark": {
+            "description": "Direct highlight video URL with TikTok watermark (short-lived upstream CDN link).",
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "TikTokHighlightPostsRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "description": "TikTok account reference — profile URL (tiktok.com/@handle), bare @handle, or plain username. Only public accounts with highlights are supported.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "username"
+        ],
+        "type": "object"
+      },
+      "TikTokHighlightPostsResult": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TikTokHighlightItem"
+            },
+            "type": "array"
+          },
+          "total": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "username": {
+            "description": "The normalized username of the profile whose highlights were listed.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "items",
+          "total"
         ],
         "type": "object"
       },
@@ -23024,6 +23168,325 @@
         "x-agentbody-api-id": "tiktok.hashtag"
       }
     },
+    "/v1/tiktok/highlight/posts": {
+      "post": {
+        "description": "Use this operation to list the public highlight posts of one TikTok account with direct no-watermark and watermarked video or image URLs, covers, music, and engagement counts. Pass a tiktok.com profile URL, a bare @handle, or a plain username. Highlights are permanent curated collections on the profile; the response returns up to 10 highlight items across the account collections. This is separately billed.",
+        "operationId": "post_v1_tiktok_highlight_posts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TikTokHighlightPostsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/TikTokHighlightPostsSuccess"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "INVALID_ARGUMENT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "INVALID_ARGUMENT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Correct the input; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UNAUTHENTICATED",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UNAUTHENTICATED",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Configure a valid API key; do not retry unchanged.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "CONFLICT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "CONFLICT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Follow the documented Idempotency-Key behavior before retrying.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_INVALID_RESPONSE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_INVALID_RESPONSE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_UNAVAILABLE",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_UNAVAILABLE",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": {
+                    "code": "UPSTREAM_TIMEOUT",
+                    "message": "example error"
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "code": {
+                          "const": "UPSTREAM_TIMEOUT",
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Retry with backoff, then report temporary unavailability.",
+            "headers": {
+              "X-Request-Id": {
+                "description": "Gateway request identifier for support and audit.",
+                "schema": {
+                  "format": "uuid",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List TikTok highlight posts",
+        "tags": [
+          "tiktok"
+        ],
+        "x-agentbody-api-id": "tiktok.highlight_posts"
+      }
+    },
     "/v1/tiktok/music": {
       "get": {
         "description": "Use this operation to get tiktok music details.",
@@ -33161,6 +33624,9 @@
     },
     "post_v1_tiktok_audio_download": {
       "url": "https://www.tiktok.com/@khaby.lame/video/7689510970292489502"
+    },
+    "post_v1_tiktok_highlight_posts": {
+      "username": "keenyakelly"
     },
     "post_v1_tiktok_story_posts": {
       "username": "isi.cos"
